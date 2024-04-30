@@ -5,9 +5,9 @@
     <classes>
       <class name="AlmosaferWeb.myTestCase">
         <methods>
+          <include name="swichTab"/>
           <include name="setUp"/>
           <include name="myPostTest"/>
-          <include name="checkHotelNotSelected"/>
         </methods>
       </class> <!-- AlmosaferWeb.myTestCase -->
     </classes>

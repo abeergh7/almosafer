@@ -3,6 +3,7 @@ package AlmosaferWeb;
 import static org.testng.Assert.assertEquals;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.Random;
 
 import org.openqa.selenium.By;
@@ -73,6 +74,29 @@ public class myTestCase extends parameter {
 
 	}
 
+	@Test(priority = 6)
+	public void checkDepartureAndReturnDate() {
+
+		LocalDate today = LocalDate.now();
+
+		int ExpectedDepartureDate = today.plusDays(1).getDayOfMonth();
+		int ExpectedReturnDate = today.plusDays(2).getDayOfMonth();
+
+//		System.out.println(ExpectedDepartureDate);
+//		System.out.println(ExpectedReturnDate);
+		int ActualDepartureDate = Integer.parseInt(driver
+				.findElement(By.cssSelector("div[class='sc-iHhHRJ sc-kqlzXE blwiEW'] span[class='sc-cPuPxo LiroG']"))
+				.getText());
+
+		int ActualReturnDate = Integer.parseInt(driver
+				.findElement(By.cssSelector("div[class='sc-iHhHRJ sc-OxbzP edzUwL'] span[class='sc-cPuPxo LiroG']"))
+				.getText());
+
+		assertEquals(ActualDepartureDate, ExpectedDepartureDate);
+		assertEquals(ActualReturnDate, ExpectedReturnDate);
+
+	}
+
 	@Test(priority = 7)
 	public void RandomMethodToChangeLanguage() {
 
@@ -86,15 +110,32 @@ public class myTestCase extends parameter {
 			String actualLang = driver.findElement(By.tagName("html")).getAttribute("lang");
 			assertEquals(actualLang, expectedLang);
 
-		}
-		else {
-			
+		} else {
+
 			String expectedLang = "en";
 			String actualLang = driver.findElement(By.tagName("html")).getAttribute("lang");
 			assertEquals(actualLang, expectedLang);
 
-			
-			
+		}
+
+	}
+
+	@Test(priority = 8)
+	public void swichTab() {
+
+		WebElement HotelTab = driver.findElement(By.id("uncontrolled-tab-example-tab-hotels"));
+		HotelTab.click();
+
+		if (driver.getCurrentUrl().contains("ar")) {
+			WebElement searchCityInputA = driver.findElement(By.className("sc-phbroq-2"));
+
+			searchCityInputA.sendKeys(citiesInArabic[randomArabic]);
+
+		} else {
+		WebElement searchCityInput = driver.findElement(By.className("sc-phbroq-2"));
+
+			searchCityInput.sendKeys(citiesInEnglish[randomEnglish]);
+
 		}
 
 	}
